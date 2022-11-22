@@ -1,7 +1,8 @@
 import { Box, Button } from "@mui/material";
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { redirect } from "react-router-dom";
 import { currentResultActions } from "../store/currentResult";
 import { searchStatesActions } from "../store/searchStates";
 import { GenSelector, SearchInput } from "./";
@@ -9,8 +10,8 @@ import { GenSelector, SearchInput } from "./";
 const SearchBar = () => {
   const dispatch = useDispatch();
   const [formInput, setFormInput] = useState("");
-  const [currentGen, setCurrentGen] = useState(0);
-  const [reset, setReset] = useState(false);
+  const [currentGen, setCurrentGen] = useState(1);
+  const loading = useSelector((state) => state.searchStates.loading);
 
   function retainInput(event) {
     setFormInput(event.target.value);
@@ -23,28 +24,35 @@ const SearchBar = () => {
   function resetSearch() {
     setCurrentGen(0);
     setFormInput("");
-    setReset(true);
+    multipleSearch();
+  }
+
+  function errorActions(err){
+    console.log(err);
+    dispatch(searchStatesActions.setError());
+    dispatch(searchStatesActions.stopLoading());
+    console.log(`No encontramos a ${formInput}`);
+  }
+
+  function individualSearch() {
+
+    fetch(`https://pokeapi.co/api/v2/pokemon/${formInput.toLowerCase()}`)
+      .then((res) => res.json())
+      .then((data) => {
+        dispatch(searchStatesActions.stopLoading())
+        dispatch(currentResultActions.retainResult(data))
+      })
+      .catch(error => errorActions(error))
   }
 
   function multipleSearch() {
-    dispatch(searchStatesActions.startLoading());
-    dispatch(searchStatesActions.clearError());
 
-    let urlToFetch;
-
-    currentGen !== 0
-      ? (urlToFetch = `https://pokeapi.co/api/v2/generation/${currentGen}`)
-      : (urlToFetch = `https://pokeapi.co/api/v2/pokemon/`);
+    const urlToFetch = `https://pokeapi.co/api/v2/generation/${currentGen}`;
 
     fetch(urlToFetch)
       .then((res) => res.json())
       .then((data) => {
-        dispatch(currentResultActions.deleteResult());
-        let searchData;
-
-        currentGen !== 0
-          ? (searchData = data.pokemon_species)
-          : (searchData = data.results);
+        const searchData = data.pokemon_species;
 
         const pokemonUrls = searchData.map((pokemon) =>
           fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`)
@@ -59,26 +67,24 @@ const SearchBar = () => {
       })
 
       .catch((error) => {
-        console.log(error);
-        dispatch(searchStatesActions.setError());
-        dispatch(currentResultActions.deleteResult());
-        dispatch(searchStatesActions.stopLoading());
-        console.log(`No encontramos a ${formInput}`);
+        errorActions(error)
       });
   }
 
-  function searchPokemon() {
+  function searchPokemon(event) {
     event.preventDefault();
+    dispatch(searchStatesActions.startLoading());
+    dispatch(searchStatesActions.clearError());
+    dispatch(currentResultActions.deleteResult());
 
-    multipleSearch();
+    formInput !== "" ? individualSearch() : multipleSearch();
 
     setFormInput("");
   }
 
   useEffect(() => {
     multipleSearch();
-    setReset(false);
-  }, [reset]);
+  }, []);
 
   return (
     <form onSubmit={searchPokemon}>
@@ -97,13 +103,27 @@ const SearchBar = () => {
         }}
       >
         <SearchInput formInput={formInput} retainInput={retainInput} />
-        <GenSelector currentGen={currentGen} retainGen={retainGen} />
+        <GenSelector
+          currentGen={currentGen}
+          retainGen={retainGen}
+          formInput={formInput}
+        />
 
-        <Button variant="contained" color="secondary" type="submit">
+        <Button
+          variant="contained"
+          color="secondary"
+          type="submit"
+          disabled={loading}
+        >
           Buscar
         </Button>
 
-        <Button variant="contained" color="delete" onClick={resetSearch}>
+        <Button
+          variant="contained"
+          color="delete"
+          onClick={resetSearch}
+          disabled={loading}
+        >
           Reiniciar
         </Button>
       </Box>

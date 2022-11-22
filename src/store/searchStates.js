@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const searchStatesInitialState = {
-  loading: false, 
+  loading: true, 
   error: false,
 };
 
