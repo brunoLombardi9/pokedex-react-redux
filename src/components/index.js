@@ -6,3 +6,8 @@ export { default as SearchInput } from "./SearchInput";
 export { default as CardsContainer } from "./CardsContainer";
 export { default as Results } from "./Results";
 export { default as CardDetail } from "./CardDetail";
+export { default as PokemonCard } from "./PokemonCard";
+export { default as ErrorPage } from "./ErrorPage";
+export { default as BottomContainer } from "./BottomContainer";
+
+

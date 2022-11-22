@@ -1,6 +1,6 @@
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid } from "@mui/material";
 import React from "react";
-import { Link } from "react-router-dom";
+import PokemonCard from "./PokemonCard";
 
 const Results = ({ currentResult }) => {
   return (
@@ -15,23 +15,20 @@ const Results = ({ currentResult }) => {
         <Grid container display="flex" justifyContent="center" gap={5}>
           {currentResult.map((pokemon) => {
             return (
-              <Link
-                to={`pokemon/${pokemon.name}`}
-                style={{ textDecoration: "none", color: "black"}}
-              >
-                <Box key={pokemon.id}>
-                  <img src={pokemon.sprites.front_default} alt={pokemon.name} />
-                  <Typography textAlign="center">
-                    {pokemon.name.charAt(0).toUpperCase() +
-                      pokemon.name.slice(1)}
-                  </Typography>
-                </Box>
-              </Link>
+              <PokemonCard
+                id={pokemon.id}
+                name={pokemon.name}
+                sprite={pokemon.sprites.front_default}
+              />
             );
           })}
         </Grid>
       ) : (
-        <Typography>{currentResult[0].name}</Typography>
+        <PokemonCard
+          id={currentResult[0].id}
+          name={currentResult[0].name}
+          sprite={currentResult[0].sprites.front_default}
+        />
       )}
 
       <Box display="flex" justifyContent="center" gap={2} marginTop="20px">

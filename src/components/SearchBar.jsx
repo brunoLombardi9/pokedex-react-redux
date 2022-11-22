@@ -2,16 +2,17 @@ import { Box, Button } from "@mui/material";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { currentResultActions } from "../store/currentResult";
 import { searchStatesActions } from "../store/searchStates";
 import { GenSelector, SearchInput } from "./";
 
 const SearchBar = () => {
-  const dispatch = useDispatch();
   const [formInput, setFormInput] = useState("");
   const [currentGen, setCurrentGen] = useState(1);
   const loading = useSelector((state) => state.searchStates.loading);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   function retainInput(event) {
     setFormInput(event.target.value);
@@ -27,7 +28,7 @@ const SearchBar = () => {
     multipleSearch();
   }
 
-  function errorActions(err){
+  function errorActions(err) {
     console.log(err);
     dispatch(searchStatesActions.setError());
     dispatch(searchStatesActions.stopLoading());
@@ -35,18 +36,16 @@ const SearchBar = () => {
   }
 
   function individualSearch() {
-
     fetch(`https://pokeapi.co/api/v2/pokemon/${formInput.toLowerCase()}`)
       .then((res) => res.json())
       .then((data) => {
-        dispatch(searchStatesActions.stopLoading())
-        dispatch(currentResultActions.retainResult(data))
+        dispatch(searchStatesActions.stopLoading());
+        dispatch(currentResultActions.retainResult(data));
       })
-      .catch(error => errorActions(error))
+      .catch((error) => errorActions(error));
   }
 
   function multipleSearch() {
-
     const urlToFetch = `https://pokeapi.co/api/v2/generation/${currentGen}`;
 
     fetch(urlToFetch)
@@ -67,7 +66,7 @@ const SearchBar = () => {
       })
 
       .catch((error) => {
-        errorActions(error)
+        errorActions(error);
       });
   }
 
@@ -76,13 +75,13 @@ const SearchBar = () => {
     dispatch(searchStatesActions.startLoading());
     dispatch(searchStatesActions.clearError());
     dispatch(currentResultActions.deleteResult());
-
+    navigate("/");
     formInput !== "" ? individualSearch() : multipleSearch();
-
     setFormInput("");
   }
 
   useEffect(() => {
+    navigate("/");
     multipleSearch();
   }, []);
 

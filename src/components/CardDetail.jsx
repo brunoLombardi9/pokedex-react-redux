@@ -1,19 +1,45 @@
-import React from "react";
+import { CircularProgress } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { searchStatesActions } from "../store/searchStates";
+import ErrorPage from "./ErrorPage";
 
 const CardDetail = () => {
   const param = useParams();
-  const pokemon = param.pokemon;
+  const pokemonName = param.pokemon;
+  const [pokemon, setPokemon] = useState("");
+  const dispatch = useDispatch();
+  const loading = useSelector((state) => state.searchStates.loading);
+  const error = useSelector((state) => state.searchStates.error);
 
   function pokemonData() {
-    fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`)
+    dispatch(searchStatesActions.startLoading());
+
+    fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
       .then((res) => res.json())
-      .then((data) => console.log(data));
+      .then((data) => setPokemon(data))
+      .then(() => dispatch(searchStatesActions.stopLoading()))
+      .catch((error) => console.log(error));
   }
 
-  pokemonData();
+  useEffect(() => {
+    pokemonData();
+  }, [pokemonName]);
 
-  return <div>{pokemon}</div>;
+  console.log(pokemon);
+  return (
+    <>
+      {loading && <CircularProgress />}
+      {error && <ErrorPage />}
+      {pokemon !== "" && (
+        <>
+          {pokemon.name}
+          <img src={pokemon.sprites.front_default} alt="" />
+        </>
+      )}
+    </>
+  );
 };
 
 export default CardDetail;
