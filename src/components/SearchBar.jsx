@@ -82,9 +82,7 @@ const SearchBar = () => {
   }
 
   useEffect(() => {
-    if (currentResult.lenght === 0) {
-      multipleSearch();
-    }
+      multipleSearch()
   }, []);
 
   return (
