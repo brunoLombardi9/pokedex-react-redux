@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
+import upperCase from "../../utilities/upperCase";
 
 const PokemonCard = ({ id, name, sprite }) => {
   return (
@@ -11,7 +12,7 @@ const PokemonCard = ({ id, name, sprite }) => {
       <Box key={id}>
         <img src={sprite} alt={name} />
         <Typography textAlign="center">
-          {name.charAt(0).toUpperCase() + name.slice(1)}
+          {upperCase(name)}
         </Typography>
       </Box>
     </Link>
