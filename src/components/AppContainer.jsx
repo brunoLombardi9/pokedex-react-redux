@@ -9,7 +9,7 @@ const AppContainer = ({ children }) => {
         minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
-        alignItems: "center"
+        alignItems: "center",
       }}
     >
       {children}
