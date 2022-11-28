@@ -1,4 +1,4 @@
-import { Box, CircularProgress, Grid, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, Grid, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -11,6 +11,8 @@ const CardDetail = () => {
   const pokemonName = param.pokemon;
   const [pokemon, setPokemon] = useState("");
   const [pokemonTexts, setPokemonTexts] = useState([]);
+  const [gameInfo, setGameInfo] = useState("");
+  const [selectedGame, setSelectedGame] = useState("")
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.searchStates.loading);
   const error = useSelector((state) => state.searchStates.error);
@@ -31,17 +33,25 @@ const CardDetail = () => {
               return text.language.name === "es";
             });
             setPokemonTexts(texts);
+            setGameInfo(texts[0].flavor_text);
+            setSelectedGame(texts[0].version.name)
           });
       })
       .catch(() => dispatch(searchStatesActions.setError()))
       .finally(() => dispatch(searchStatesActions.stopLoading()));
   }
 
+  function showText(gameName) {
+    setSelectedGame(gameName); 
+    const text = pokemonTexts.find((text) => {
+      return text.version.name === gameName;
+    });
+    setGameInfo(text.flavor_text);
+  }
+
   useEffect(() => {
     pokemonData();
   }, [pokemonName]);
-
-  console.log(pokemonTexts);
 
   return (
     <>
@@ -60,22 +70,23 @@ const CardDetail = () => {
             {upperCase(pokemon.name)}
           </Typography>
 
-          {pokemonTexts.length > 0 && (
-            <Grid gap={2} display="flex" flexDirection="column">
-              {pokemonTexts.map((text) => {
-                return (
-                  <Box display="flex" flexDirection="column">
-                    <Typography textAlign="center">
-                      {upperCase(text.version.name)}:
-                    </Typography>
-                    <Typography textAlign="center">
-                      {text.flavor_text}
-                    </Typography>
-                  </Box>
-                );
-              })}
-            </Grid>
-          )}
+          <Box display="flex" justifyContent="center" gap={1.5}>
+            {pokemonTexts.map((text) => {
+              console.log(text.version.name)
+              return (
+                <Button
+                  onClick={() => showText(text.version.name)}
+                  variant={
+                    text.version.name === selectedGame ? "contained" : "outlined"
+                  }
+                >
+                  {upperCase(text.version.name)}
+                </Button>
+              );
+            })}
+          </Box>
+
+          <Typography textAlign="center">{gameInfo}</Typography>
         </Grid>
       )}
     </>
