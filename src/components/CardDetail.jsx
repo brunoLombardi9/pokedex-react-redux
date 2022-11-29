@@ -75,7 +75,7 @@ const CardDetail = () => {
           <img
             src={pokemon.sprites.other["official-artwork"].front_default}
             alt={pokemon.name}
-            style={{ minWidth: "80%", margin: "auto" }}
+            style={{ width: "40%", margin: "auto" }}
           />
 
           <Typography textAlign="center">Pokémon n° {pokemon.id}</Typography>
@@ -99,7 +99,7 @@ const CardDetail = () => {
                       : "outlined"
                   }
                 >
-                  {upperCase(text.version.name)}
+                  {text.version.name}
                 </Button>
               );
             })}

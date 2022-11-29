@@ -1,9 +1,10 @@
-import { Box } from "@mui/material";
+import { Grid } from "@mui/material";
 import React from "react";
 
 const AppContainer = ({ children }) => {
   return (
-    <Box
+    <Grid
+    container={true}
       sx={{
         backgroundColor: "primary.main",
         minHeight: "100vh",
@@ -13,7 +14,7 @@ const AppContainer = ({ children }) => {
       }}
     >
       {children}
-    </Box>
+    </Grid>
   );
 };
 
