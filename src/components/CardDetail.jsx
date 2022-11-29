@@ -75,7 +75,7 @@ const CardDetail = () => {
           <img
             src={pokemon.sprites.other["official-artwork"].front_default}
             alt={pokemon.name}
-            style={{ width: "40%", margin: "auto" }}
+            style={{ width: "60%", margin: "auto" }}
           />
 
           <Typography textAlign="center">Pokémon n° {pokemon.id}</Typography>
