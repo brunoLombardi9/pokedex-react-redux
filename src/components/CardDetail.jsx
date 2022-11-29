@@ -70,12 +70,12 @@ const CardDetail = () => {
           display="flex"
           flexDirection="column"
           justifyContent="center"
-          maxWidth="60vw"
+          minWidth="60vw"
         >
           <img
             src={pokemon.sprites.other["official-artwork"].front_default}
             alt={pokemon.name}
-            style={{ width: "50%", margin: "auto" }}
+            style={{ minWidth: "80%", margin: "auto" }}
           />
 
           <Typography textAlign="center">Pokémon n° {pokemon.id}</Typography>
