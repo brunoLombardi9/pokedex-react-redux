@@ -5,7 +5,7 @@ import PokemonCard from "./PokemonCard";
 const Results = ({ currentResult }) => {
   return (
     <Grid
-      container
+      container={true}
       display="flex"
       justifyContent="center"
       alignItems="center"
@@ -16,7 +16,7 @@ const Results = ({ currentResult }) => {
           <PokemonCard
             id={pokemon.id}
             name={pokemon.name}
-            sprite={pokemon.sprites.front_default}
+            sprite={pokemon.sprites.other["official-artwork"].front_default}
           />
         );
       })}

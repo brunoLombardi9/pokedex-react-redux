@@ -66,18 +66,29 @@ const CardDetail = () => {
       {error && <ErrorPage />}
 
       {pokemon !== "" && (
-        <Grid display="flex" flexDirection="column" justifyContent="center" maxWidth="60vw">
+        <Grid
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
+          maxWidth="60vw"
+        >
           <img
-            src={pokemon.sprites.front_default}
+            src={pokemon.sprites.other["official-artwork"].front_default}
             alt={pokemon.name}
             style={{ width: "50%", margin: "auto" }}
           />
+
+          <Typography textAlign="center">Pokémon n° {pokemon.id}</Typography>
 
           <Typography textAlign="center" mb={2}>
             {upperCase(pokemon.name)}
           </Typography>
 
-          <Grid container sx={{ display: "flex", justifyContent: "center" }} gap={1}>
+          <Grid
+            container
+            sx={{ display: "flex", justifyContent: "center" }}
+            gap={1}
+          >
             {pokemonTexts.map((text) => {
               return (
                 <Button
@@ -94,7 +105,9 @@ const CardDetail = () => {
             })}
           </Grid>
 
-          <Typography textAlign="center"mt={2}>{gameInfo}</Typography>
+          <Typography textAlign="center" mt={2}>
+            {gameInfo}
+          </Typography>
         </Grid>
       )}
     </>
