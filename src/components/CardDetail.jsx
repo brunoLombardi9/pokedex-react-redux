@@ -12,6 +12,7 @@ import { useParams } from "react-router-dom";
 import upperCase from "../../utilities/upperCase";
 import { searchStatesActions } from "../store/searchStates";
 import ErrorPage from "./ErrorPage";
+import { Image } from "mui-image";
 
 const CardDetail = () => {
   const param = useParams();
@@ -72,9 +73,11 @@ const CardDetail = () => {
           justifyContent="center"
           minWidth="60vw"
         >
-          <img
+          <Image
             src={pokemon.sprites.other["official-artwork"].front_default}
             alt={pokemon.name}
+            showLoading={true}
+            duration={350}
             style={{ width: "60%", margin: "auto" }}
           />
 
