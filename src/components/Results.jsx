@@ -1,5 +1,6 @@
 import { Box, Button, Grid } from "@mui/material";
 import React from "react";
+import GoUpIcon from "./GoUpIcon";
 import PokemonCard from "./PokemonCard";
 
 const Results = ({ currentResult }) => {
@@ -21,11 +22,7 @@ const Results = ({ currentResult }) => {
         );
       })}
 
-      {/* 
-      <Box display="flex" justifyContent="center" gap={2} marginTop="20px">
-        <Button variant="contained">Anterior</Button>
-        <Button variant="contained">Siguiente</Button>
-      </Box> */}
+<GoUpIcon/>
     </Grid>
   );
 };

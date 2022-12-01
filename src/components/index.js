@@ -9,5 +9,6 @@ export { default as CardDetail } from "./CardDetail";
 export { default as PokemonCard } from "./PokemonCard";
 export { default as ErrorPage } from "./ErrorPage";
 export { default as BottomContainer } from "./BottomContainer";
+export { default as GoUpIcon } from "./GoUpIcon";
 
 
