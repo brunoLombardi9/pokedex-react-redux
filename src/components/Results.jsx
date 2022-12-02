@@ -21,8 +21,7 @@ const Results = ({ currentResult }) => {
           />
         );
       })}
-
-<GoUpIcon/>
+      <GoUpIcon />
     </Grid>
   );
 };

@@ -12,6 +12,7 @@ const AppContainer = ({ children }) => {
         flexDirection: "column",
         alignItems: "center",
       }}
+      onScroll={() => console.log(",pmp")}
     >
       {children}
     </Grid>

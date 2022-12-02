@@ -1,16 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import ArrowUpwardRoundedIcon from "@mui/icons-material/ArrowUpwardRounded";
 import { Button } from "@mui/material";
 
-function goUp() {
-  const index = document.documentElement;
-  index.scrollTo({
-    top: 0,
-    behavior: "smooth",
-  });
-}
-
 const GoUpIcon = () => {
+  const [showIcon, setShowIcon] = useState(false);
+
+  function goUp() {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }
+
+  function iconHandler() {
+    const top = window.pageYOffset || document.documentElement.scrollTop;
+    top > 250 ? setShowIcon(true) : setShowIcon(false);
+  }
+
+  window.onscroll = () => {
+    iconHandler();
+  };
+
   return (
     <Button
       variant="contained"
@@ -20,8 +30,9 @@ const GoUpIcon = () => {
         right: "40px",
         height: "50px",
         width: "50px",
-        zIndex: "1000",
         borderRadius: "100px",
+        display: showIcon === true ? "flex" : "none",
+        backgroundColor: "secondary.main",
       }}
       onClick={goUp}
     >
