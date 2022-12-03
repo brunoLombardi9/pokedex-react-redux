@@ -13,13 +13,14 @@ const GoUpIcon = () => {
   }
 
   function iconHandler() {
-    const top = window.pageYOffset || document.documentElement.scrollTop;
-    top > 250 ? setShowIcon(true) : setShowIcon(false);
+    const top = window.scrollY;
+    const scrollLimit = 250;
+
+    if (top < scrollLimit && showIcon) setShowIcon(false);
+    if (top > scrollLimit && showIcon === false) setShowIcon(true);
   }
 
-  window.onscroll = () => {
-    iconHandler();
-  };
+  window.onscroll = () => iconHandler();
 
   return (
     <Button
@@ -31,7 +32,7 @@ const GoUpIcon = () => {
         height: "50px",
         width: "50px",
         borderRadius: "100px",
-        display: showIcon === true ? "flex" : "none",
+        display: showIcon ? "flex" : "none",
         backgroundColor: "secondary.main",
       }}
       onClick={goUp}

@@ -10,7 +10,7 @@ import { GenSelector, SearchInput } from "./";
 const SearchBar = () => {
   const [formInput, setFormInput] = useState("");
   const [currentGen, setCurrentGen] = useState(1);
-  const currentResult = useSelector((state) => state.currentResult);
+  const [reset, setReset] = useState(false);
   const loading = useSelector((state) => state.searchStates.loading);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -23,10 +23,17 @@ const SearchBar = () => {
     setCurrentGen(event.target.value);
   }
 
+  function startSearch(){
+    dispatch(searchStatesActions.startLoading());
+    dispatch(searchStatesActions.clearError());
+    dispatch(currentResultActions.deleteResult());
+  }
+
   function resetSearch() {
+    startSearch();
     setCurrentGen(1);
     setFormInput("");
-    searchPokemon()
+    setReset(true);
   }
 
   function errorActions(err) {
@@ -73,17 +80,22 @@ const SearchBar = () => {
 
   function searchPokemon() {
     event.preventDefault();
-    dispatch(searchStatesActions.startLoading());
-    dispatch(searchStatesActions.clearError());
-    dispatch(currentResultActions.deleteResult());
+    startSearch();
     navigate("/");
     formInput !== "" ? individualSearch() : multipleSearch();
     setFormInput("");
   }
 
   useEffect(() => {
-      multipleSearch()
+    multipleSearch();
   }, []);
+
+  useEffect(() => {
+    if(reset) {
+      multipleSearch();
+      setReset(false);
+    }
+  }, [reset]);
 
   return (
     <form onSubmit={searchPokemon}>
