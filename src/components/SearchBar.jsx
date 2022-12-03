@@ -31,6 +31,7 @@ const SearchBar = () => {
 
   function resetSearch() {
     startSearch();
+    navigate("/");
     setCurrentGen(1);
     setFormInput("");
     setReset(true);
