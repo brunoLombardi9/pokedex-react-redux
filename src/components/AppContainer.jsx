@@ -4,7 +4,7 @@ import React from "react";
 const AppContainer = ({ children }) => {
   return (
     <Grid
-    container={true}
+      container={true}
       sx={{
         backgroundColor: "primary.main",
         minHeight: "100vh",
@@ -12,7 +12,6 @@ const AppContainer = ({ children }) => {
         flexDirection: "column",
         alignItems: "center",
       }}
-      onScroll={() => console.log(",pmp")}
     >
       {children}
     </Grid>

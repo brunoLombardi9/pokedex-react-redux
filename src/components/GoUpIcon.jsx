@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ArrowUpwardRoundedIcon from "@mui/icons-material/ArrowUpwardRounded";
-import { Button } from "@mui/material";
+import { IconButton } from "@mui/material";
 
 const GoUpIcon = () => {
   const [showIcon, setShowIcon] = useState(false);
@@ -23,8 +23,9 @@ const GoUpIcon = () => {
   window.onscroll = () => iconHandler();
 
   return (
-    <Button
+    <IconButton
       variant="contained"
+      size="small"
       sx={{
         position: "fixed",
         bottom: "40px",
@@ -34,11 +35,16 @@ const GoUpIcon = () => {
         borderRadius: "100px",
         display: showIcon ? "flex" : "none",
         backgroundColor: "secondary.main",
+        color:"white",
+        "&:hover, &.Mui-focusVisible": {
+          transition: '0.3s',
+          backgroundColor: '#5687ac'
+      } 
       }}
       onClick={goUp}
     >
       <ArrowUpwardRoundedIcon />
-    </Button>
+    </IconButton>
   );
 };
 

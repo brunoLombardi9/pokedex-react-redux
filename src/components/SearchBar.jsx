@@ -23,10 +23,9 @@ const SearchBar = () => {
     setCurrentGen(event.target.value);
   }
 
-  function startSearch(){
+  function startSearch() {
     dispatch(searchStatesActions.startLoading());
     dispatch(searchStatesActions.clearError());
-    dispatch(currentResultActions.deleteResult());
   }
 
   function resetSearch() {
@@ -48,8 +47,8 @@ const SearchBar = () => {
     fetch(`https://pokeapi.co/api/v2/pokemon/${formInput.toLowerCase()}`)
       .then((res) => res.json())
       .then((data) => {
+        dispatch(currentResultActions.retainResult([data]));
         dispatch(searchStatesActions.stopLoading());
-        dispatch(currentResultActions.retainResult(data));
       })
       .catch((error) => errorActions(error));
   }
@@ -61,17 +60,19 @@ const SearchBar = () => {
       .then((res) => res.json())
       .then((data) => {
         const searchData = data.pokemon_species;
+        const pokemons = [];
 
         const pokemonUrls = searchData.map((pokemon) =>
           fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`)
             .then((res) => res.json())
-            .then((data) => dispatch(currentResultActions.retainResult(data)))
+            .then((data) => pokemons.push(data))
             .catch((error) => console.log(error))
         );
 
-        Promise.all(pokemonUrls).then(() =>
-          dispatch(searchStatesActions.stopLoading())
-        );
+        Promise.all(pokemonUrls).then(() => {
+          dispatch(currentResultActions.retainResult(pokemons));
+          dispatch(searchStatesActions.stopLoading());
+        });
       })
 
       .catch((error) => {
@@ -92,7 +93,7 @@ const SearchBar = () => {
   }, []);
 
   useEffect(() => {
-    if(reset) {
+    if (reset) {
       multipleSearch();
       setReset(false);
     }

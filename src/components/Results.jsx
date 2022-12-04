@@ -4,6 +4,7 @@ import GoUpIcon from "./GoUpIcon";
 import PokemonCard from "./PokemonCard";
 
 const Results = ({ currentResult }) => {
+  console.log(currentResult)
   return (
     <Grid
       container={true}
@@ -15,9 +16,11 @@ const Results = ({ currentResult }) => {
       {currentResult.map((pokemon) => {
         return (
           <PokemonCard
+            key={pokemon.id}
             id={pokemon.id}
             name={pokemon.name}
             sprite={pokemon.sprites.other["official-artwork"].front_default}
+            types={pokemon.types}
           />
         );
       })}

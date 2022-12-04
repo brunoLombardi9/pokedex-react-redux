@@ -7,12 +7,8 @@ const currentResultSlice = createSlice({
   initialState: currentResultInitialState,
   reducers: {
     retainResult(state, action) {
-      state = [...state, action.payload];
+      state = [...action.payload];
       state.sort((a, b) => a.id - b.id);
-      return state;
-    },
-    deleteResult(state) {
-      state = currentResultInitialState;
       return state;
     },
   },

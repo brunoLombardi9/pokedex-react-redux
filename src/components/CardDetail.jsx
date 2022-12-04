@@ -93,16 +93,18 @@ const CardDetail = () => {
             gap={1}
           >
             {pokemonTexts.map((text) => {
+              const version = text.version.name
               return (
                 <Button
-                  onClick={() => showText(text.version.name)}
+                  key={version}
+                  onClick={() => showText(version)}
                   variant={
-                    text.version.name === selectedGame
+                    version === selectedGame
                       ? "contained"
                       : "outlined"
                   }
                 >
-                  {text.version.name}
+                  {version}
                 </Button>
               );
             })}
