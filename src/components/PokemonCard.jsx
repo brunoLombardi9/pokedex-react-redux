@@ -5,6 +5,7 @@ import upperCase from "../../utilities/upperCase";
 import { Image } from "mui-image";
 
 const PokemonCard = ({ id, name, sprite, types }) => {
+  
   return (
     <Grid
       key={id}
@@ -41,7 +42,9 @@ const PokemonCard = ({ id, name, sprite, types }) => {
         >
           {types.map((typeObjet) => {
             const type = typeObjet.type.name;
-            const typeIcon = `../../public/${type}.svg`;
+            // const typeIcon = `../../public/${type}.svg`;
+            const typeIcon = `./public/${type}.svg`
+            
 
             return (
               <Box width="45%" >
