@@ -43,7 +43,7 @@ const PokemonCard = ({ id, name, sprite, types }) => {
           {types.map((typeObjet) => {
             const type = typeObjet.type.name;
             // const typeIcon = `../../public/${type}.svg`;
-            const typeIcon = `./public/${type}.svg`
+            const typeIcon = `/public/${type}.svg`
             
 
             return (
