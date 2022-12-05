@@ -11,6 +11,7 @@ const AppContainer = ({ children }) => {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
+        justifyContent: "center",
       }}
     >
       {children}
