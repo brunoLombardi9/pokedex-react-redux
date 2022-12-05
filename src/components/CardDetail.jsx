@@ -26,6 +26,8 @@ const CardDetail = () => {
   const loading = useSelector((state) => state.searchStates.loading);
   const error = useSelector((state) => state.searchStates.error);
 
+console.log(param)
+
   function pokemonData() {
     dispatch(searchStatesActions.startLoading());
 

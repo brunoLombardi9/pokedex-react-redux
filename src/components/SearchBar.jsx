@@ -2,7 +2,7 @@ import { Box, Button } from "@mui/material";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { currentResultActions } from "../store/currentResult";
 import { searchStatesActions } from "../store/searchStates";
 import { GenSelector, SearchInput } from "./";
@@ -12,6 +12,7 @@ const SearchBar = () => {
   const [currentGen, setCurrentGen] = useState(1);
   const [reset, setReset] = useState(false);
   const loading = useSelector((state) => state.searchStates.loading);
+  const currentResult = useSelector((state) => state.currentResult);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -90,7 +91,7 @@ const SearchBar = () => {
   }
 
   useEffect(() => {
-    multipleSearch();
+    currentResult.length === 0 && multipleSearch();
   }, []);
 
   useEffect(() => {
