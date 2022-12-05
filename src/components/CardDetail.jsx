@@ -13,6 +13,7 @@ import upperCase from "../../utilities/upperCase";
 import { searchStatesActions } from "../store/searchStates";
 import ErrorPage from "./ErrorPage";
 import { Image } from "mui-image";
+import PokemonTypes from "./PokemonTypes";
 
 const CardDetail = () => {
   const param = useParams();
@@ -81,7 +82,11 @@ const CardDetail = () => {
             style={{ width: "60%", margin: "auto" }}
           />
 
-          <Typography textAlign="center">Pokémon n° {pokemon.id}</Typography>
+          <PokemonTypes types={pokemon.types} />
+
+          <Typography textAlign="center" mt={2}>
+            Pokémon n° {pokemon.id}
+          </Typography>
 
           <Typography textAlign="center" mb={2}>
             {upperCase(pokemon.name)}
@@ -93,16 +98,12 @@ const CardDetail = () => {
             gap={1}
           >
             {pokemonTexts.map((text) => {
-              const version = text.version.name
+              const version = text.version.name;
               return (
                 <Button
                   key={version}
                   onClick={() => showText(version)}
-                  variant={
-                    version === selectedGame
-                      ? "contained"
-                      : "outlined"
-                  }
+                  variant={version === selectedGame ? "contained" : "outlined"}
                 >
                   {version}
                 </Button>

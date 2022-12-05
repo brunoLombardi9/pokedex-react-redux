@@ -34,7 +34,6 @@ const GoUpIcon = () => {
             right: "40px",
             height: "50px",
             width: "50px",
-            borderRadius: "100px",
             backgroundColor: "secondary.main",
             color: "white",
             "&:hover, &.Mui-focusVisible": {
