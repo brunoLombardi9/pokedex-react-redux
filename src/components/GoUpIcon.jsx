@@ -23,28 +23,31 @@ const GoUpIcon = () => {
   window.onscroll = () => iconHandler();
 
   return (
-    <IconButton
-      variant="contained"
-      size="small"
-      sx={{
-        position: "fixed",
-        bottom: "40px",
-        right: "40px",
-        height: "50px",
-        width: "50px",
-        borderRadius: "100px",
-        display: showIcon ? "flex" : "none",
-        backgroundColor: "secondary.main",
-        color:"white",
-        "&:hover, &.Mui-focusVisible": {
-          transition: '0.3s',
-          backgroundColor: '#5687ac'
-      } 
-      }}
-      onClick={goUp}
-    >
-      <ArrowUpwardRoundedIcon />
-    </IconButton>
+    <>
+      {showIcon && (
+        <IconButton
+          variant="contained"
+          size="small"
+          sx={{
+            position: "fixed",
+            bottom: "40px",
+            right: "40px",
+            height: "50px",
+            width: "50px",
+            borderRadius: "100px",
+            backgroundColor: "secondary.main",
+            color: "white",
+            "&:hover, &.Mui-focusVisible": {
+              transition: "0.3s",
+              backgroundColor: "#5687ac",
+            },
+          }}
+          onClick={goUp}
+        >
+          <ArrowUpwardRoundedIcon />
+        </IconButton>
+      )}
+    </>
   );
 };
 

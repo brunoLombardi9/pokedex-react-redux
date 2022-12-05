@@ -38,6 +38,7 @@ const SearchBar = () => {
 
   function errorActions(err) {
     console.log(err);
+    dispatch(currentResultActions.retainResult([]));
     dispatch(searchStatesActions.setError());
     dispatch(searchStatesActions.stopLoading());
     console.log(`No encontramos a ${formInput}`);
@@ -80,7 +81,7 @@ const SearchBar = () => {
       });
   }
 
-  function searchPokemon() {
+  function searchPokemon(event) {
     event.preventDefault();
     startSearch();
     navigate("/");
@@ -115,11 +116,16 @@ const SearchBar = () => {
           gap: "1rem",
         }}
       >
-        <SearchInput formInput={formInput} retainInput={retainInput} />
+        <SearchInput
+          formInput={formInput}
+          retainInput={retainInput}
+          loading={loading}
+        />
         <GenSelector
           currentGen={currentGen}
           retainGen={retainGen}
           formInput={formInput}
+          loading={loading}
         />
 
         <Button
