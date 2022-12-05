@@ -10,7 +10,9 @@ const App = () => {
       <BrowserRouter>
         <AppContainer>
           <Provider store={store}>
-            <SearchBar />
+            <Routes>
+              <Route path="/" element={<SearchBar />} />
+            </Routes>
             <BottomContainer>
               <Routes>
                 <Route path="/" element={<CardsContainer />} />
