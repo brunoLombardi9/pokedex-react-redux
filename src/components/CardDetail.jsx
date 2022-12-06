@@ -26,7 +26,7 @@ const CardDetail = () => {
   const loading = useSelector((state) => state.searchStates.loading);
   const error = useSelector((state) => state.searchStates.error);
 
-console.log(param)
+  console.log(param);
 
   function pokemonData() {
     dispatch(searchStatesActions.startLoading());
@@ -74,14 +74,13 @@ console.log(param)
           display="flex"
           flexDirection="column"
           justifyContent="center"
-          minWidth="60vw"
+          width={{sm:"90%",md:"60%"}}
         >
           <Image
             src={pokemon.sprites.other["official-artwork"].front_default}
             alt={pokemon.name}
             showLoading={true}
             duration={350}
-            style={{ width: "60%", margin: "auto" }}
           />
 
           <PokemonTypes types={pokemon.types} />

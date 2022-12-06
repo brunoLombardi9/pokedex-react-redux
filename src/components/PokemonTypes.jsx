@@ -15,7 +15,7 @@ const PokemonTypes = ({ types }) => {
         const type = typeObjet.type.name;
         const typeIcon = `/${type}.svg`;
         const backgroundColor = typeStyles[type].backgroundColor;
-        const boxShadow = typeStyles[type].boxShadow;
+        const boxShadow = `0 0 10px ${backgroundColor}`;
 
         return (
           <Box
