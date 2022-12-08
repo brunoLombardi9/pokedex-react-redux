@@ -20,7 +20,12 @@ const PokemonStats = ({ stats, types }) => {
     ],
   });
 
-  return <Bar data={statsData} />;
+  return (
+    <Grid container={true}>
+      <Bar data={statsData} />
+    </Grid>
+  );
 };
 
 export default PokemonStats;
+  

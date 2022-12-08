@@ -7,7 +7,8 @@ const BottomContainer = ({ children }) => {
       sx={{
         backgroundColor: "white",
         borderRadius: "0.5rem",
-        width: "60%",
+        minWidth: "60%",
+        maxWidth: "100%",
         minHeight: "40vh",
         padding: "2rem",
         margin: "1rem",
