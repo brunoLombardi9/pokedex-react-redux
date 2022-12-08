@@ -30,7 +30,7 @@ const CardDetail = () => {
   function pokemonData() {
     dispatch(searchStatesActions.startLoading());
 
-    fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
+    const promise = fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
       .then((res) => res.json())
       .then((data) => {
         setPokemon(data);
@@ -42,14 +42,20 @@ const CardDetail = () => {
             const texts = data.flavor_text_entries.filter((text) => {
               return text.language.name === "es";
             });
-            setPokemonTexts(texts);
-            setGameInfo(texts[0].flavor_text);
-            setSelectedGame(texts[0].version.name);
-            dispatch(searchStatesActions.stopLoading())
+
+            if (texts.length > 0) {
+              setPokemonTexts(texts);
+              setGameInfo(texts[0].flavor_text);
+              setSelectedGame(texts[0].version.name);
+            } else setGameInfo("No tenemos información de este pokémon aun.");
           });
       })
-      .catch(() => dispatch(searchStatesActions.setError()))
-      // .finally(() => dispatch(searchStatesActions.stopLoading()));
+      .catch(() => dispatch(searchStatesActions.setError()));
+
+    Promise.resolve(promise).finally(() =>
+      dispatch(searchStatesActions.stopLoading())
+    );
+
   }
 
   function showText(gameName) {
@@ -69,7 +75,7 @@ const CardDetail = () => {
       {loading && <CircularProgress />}
       {error && <ErrorPage />}
 
-      {(pokemon !== "" && gameInfo !== "") && (
+      {loading === false && gameInfo !== "" && (
         <Grid
           display="flex"
           flexDirection="column"
@@ -114,9 +120,7 @@ const CardDetail = () => {
           </Grid>
 
           <Typography textAlign="center" mt={2} mb={2}>
-            {gameInfo === ""
-              ? "No tenemos información de este pokémon aun."
-              : gameInfo}
+            {gameInfo}
           </Typography>
 
           <PokemonStats stats={pokemon.stats} types={pokemon.types} />
