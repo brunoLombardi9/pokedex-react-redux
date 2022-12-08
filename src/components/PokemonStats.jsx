@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Box } from "@mui/material";
 import { Chart as ChartJS } from "chart.js/auto";
 import React, { useState } from "react";
 import { Bar } from "react-chartjs-2";
@@ -21,11 +21,16 @@ const PokemonStats = ({ stats, types }) => {
   });
 
   return (
-    <Grid container={true}>
+    <Box
+      width={{ sm: "60%", md: "100%" }}
+      position="relative"
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+    >
       <Bar data={statsData} />
-    </Grid>
+    </Box>
   );
 };
 
 export default PokemonStats;
-  

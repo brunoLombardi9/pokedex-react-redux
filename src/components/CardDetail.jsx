@@ -74,6 +74,7 @@ const CardDetail = () => {
           display="flex"
           flexDirection="column"
           justifyContent="center"
+          alignItems="center"
           width={{ sm: "90%", md: "60%" }}
         >
           <Image
