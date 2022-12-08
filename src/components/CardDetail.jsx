@@ -14,6 +14,7 @@ import { searchStatesActions } from "../store/searchStates";
 import ErrorPage from "./ErrorPage";
 import { Image } from "mui-image";
 import PokemonTypes from "./PokemonTypes";
+import PokemonStats from "./PokemonStats";
 
 const CardDetail = () => {
   const param = useParams();
@@ -25,8 +26,6 @@ const CardDetail = () => {
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.searchStates.loading);
   const error = useSelector((state) => state.searchStates.error);
-
-  console.log(param);
 
   function pokemonData() {
     dispatch(searchStatesActions.startLoading());
@@ -46,10 +45,11 @@ const CardDetail = () => {
             setPokemonTexts(texts);
             setGameInfo(texts[0].flavor_text);
             setSelectedGame(texts[0].version.name);
+            dispatch(searchStatesActions.stopLoading())
           });
       })
       .catch(() => dispatch(searchStatesActions.setError()))
-      .finally(() => dispatch(searchStatesActions.stopLoading()));
+      // .finally(() => dispatch(searchStatesActions.stopLoading()));
   }
 
   function showText(gameName) {
@@ -69,12 +69,12 @@ const CardDetail = () => {
       {loading && <CircularProgress />}
       {error && <ErrorPage />}
 
-      {pokemon !== "" && (
+      {(pokemon !== "" && gameInfo !== "") && (
         <Grid
           display="flex"
           flexDirection="column"
           justifyContent="center"
-          width={{sm:"90%",md:"60%"}}
+          width={{ sm: "90%", md: "60%" }}
         >
           <Image
             src={pokemon.sprites.other["official-artwork"].front_default}
@@ -112,9 +112,13 @@ const CardDetail = () => {
             })}
           </Grid>
 
-          <Typography textAlign="center" mt={2}>
-            {gameInfo}
+          <Typography textAlign="center" mt={2} mb={2}>
+            {gameInfo === ""
+              ? "No tenemos información de este pokémon aun."
+              : gameInfo}
           </Typography>
+
+          <PokemonStats stats={pokemon.stats} types={pokemon.types} />
         </Grid>
       )}
     </>
