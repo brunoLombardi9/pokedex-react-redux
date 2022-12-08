@@ -22,7 +22,7 @@ const PokemonStats = ({ stats, types }) => {
 
   return (
     <Box
-      width={{ sm: "60%", md: "100%" }}
+      width={{ sm: "50%", md: "100%" }}
       position="relative"
       display="flex"
       justifyContent="center"

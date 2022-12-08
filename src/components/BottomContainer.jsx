@@ -10,12 +10,11 @@ const BottomContainer = ({ children }) => {
         minWidth: "60%",
         maxWidth: "100%",
         minHeight: "40vh",
-        padding: "2rem",
+        padding: "1rem",
         margin: "1rem",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        gap: "2rem",
       }}
     >
       {children}
