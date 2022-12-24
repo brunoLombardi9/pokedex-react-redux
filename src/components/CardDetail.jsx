@@ -72,10 +72,10 @@ const CardDetail = () => {
 
   return (
     <>
-      {loading && <CircularProgress />}
+      {(loading && gameInfo === "") && <CircularProgress />}
       {error && <ErrorPage />}
 
-      {loading === false && gameInfo !== "" && (
+      {(loading === false && gameInfo !== "") && (
         <Grid
           display="flex"
           flexDirection="column"
