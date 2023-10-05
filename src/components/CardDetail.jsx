@@ -55,7 +55,6 @@ const CardDetail = () => {
     Promise.resolve(promise).finally(() =>
       dispatch(searchStatesActions.stopLoading())
     );
-
   }
 
   function showText(gameName) {
@@ -72,10 +71,10 @@ const CardDetail = () => {
 
   return (
     <>
-      {(loading && gameInfo === "") && <CircularProgress />}
+      {loading && gameInfo === "" && <CircularProgress />}
       {error && <ErrorPage />}
 
-      {(loading === false && gameInfo !== "") && (
+      {!loading && gameInfo !== "" && (
         <Grid
           display="flex"
           flexDirection="column"
@@ -88,6 +87,7 @@ const CardDetail = () => {
             alt={pokemon.name}
             showLoading={true}
             duration={350}
+            style={{ maxWidth: "400px" }}
           />
 
           <PokemonTypes types={pokemon.types} />
@@ -119,7 +119,7 @@ const CardDetail = () => {
             })}
           </Grid>
 
-          <Typography textAlign="center" mt={2} mb={2}>
+          <Typography textAlign="center" mt={2} mb={2} maxWidth={"400px"}>
             {gameInfo}
           </Typography>
 

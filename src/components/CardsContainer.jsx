@@ -10,7 +10,7 @@ const CardsContainer = () => {
 
   return (
     <>
-      {(loading === false && currentResult.length > 0) && <Results currentResult={currentResult}/> }
+      {(!loading && currentResult.length > 0) && <Results currentResult={currentResult}/> }
       {loading && <CircularProgress/>}
       {error &&  <ErrorPage/>}
     </>
